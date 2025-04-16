@@ -1,0 +1,10 @@
+.hero-section {
+    background: url("https://source.unsplash.com/1600x900/?farm,agriculture") no-repeat center center/cover;
+    height: 50vh;
+    width: 100%;
+  }
+  
+  .container {
+    max-width: 1200px;
+  }
+  
