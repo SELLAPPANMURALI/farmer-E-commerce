@@ -1,4 +1,4 @@
-.dashboard-container {
+/* .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -71,5 +71,124 @@
   p {
     font-size: 16px;
     color: #555;
+  }
+   */
+
+
+   .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f3f3f3, #c0e5ec);
+    padding: 20px;
+  }
+  
+  .auth-box {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .auth-form label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .auth-form input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .auth-form button {
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .auth-form button:hover {
+    background-color: #21867a;
+  }
+  
+  .switch-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .switch-text span {
+    color: #2a9d8f;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 500px) {
+    .auth-box {
+      padding: 20px;
+    }
+  
+    .auth-form input {
+      font-size: 14px;
+    }
+  
+    .auth-form button {
+      font-size: 15px;
+    }
+  }
+  
+  /* 🌙 Dark Mode Support */
+  body.dark .auth-container {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+  }
+  
+  body.dark .auth-box {
+    background: #222;
+    color: #fff;
+  }
+  
+  body.dark .auth-box h2,
+  body.dark .auth-form label {
+    color: #fff;
+  }
+  
+  body.dark .auth-form input {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #666;
+  }
+  
+  body.dark .auth-form button {
+    background-color: #666;
+  }
+  
+  body.dark .auth-form button:hover {
+    background-color: #888;
+  }
+  
+  body.dark .switch-text span {
+    color: #84d4c2;
   }
   

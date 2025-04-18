@@ -1,27 +1,95 @@
+// import React, { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import "./FarmerDashboard.css"; // Add CSS for styling
+
+// const FarmerDashboard = () => {
+//   const [products, setProducts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:5000/api/products"); // Replace with your backend API endpoint
+//         setProducts(response.data);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error("Error fetching products:", error);
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProducts();
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("farmerToken");
+//     navigate("/farmer-login");
+//   };
+
+//   const handleAddProduct = () => {
+//     navigate("/add-product"); // Navigate to the Add Product page
+//   };
+
+//   return (
+//     <div className="dashboard-container">
+//       <header className="dashboard-header">
+//         <h1>Farmer Dashboard</h1>
+//         <div>
+//           <button onClick={handleAddProduct} className="btn-add">➕ Add Product</button>
+//           <button onClick={handleLogout} className="btn-logout">🚪 Logout</button>
+//         </div>
+//       </header>
+
+//       {loading ? (
+//         <p>Loading products...</p>
+//       ) : (
+//         <div className="product-list">
+//           {products.length > 0 ? (
+//             products.map((product) => (
+//               <div key={product._id} className="product-card">
+//                 <img src={product.image} alt={product.name} className="product-image" />
+//                 <h2>{product.name}</h2>
+//                 <p>Price: ₹{product.price}</p>
+//                 <p>Quantity: {product.quantity} kg</p>
+//               </div>
+//             ))
+//           ) : (
+//             <p>No products available. Add some!</p>
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default FarmerDashboard;
+
+
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./FarmerDashboard.css"; // Add CSS for styling
+import "./FarmerDashboard.css";
 
 const FarmerDashboard = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/products"); // Replace with your backend API endpoint
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const fetchProducts = async () => {
+    try {
+      const token = localStorage.getItem("farmerToken");
+      const response = await axios.get("http://localhost:5000/api/products/my", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Failed to fetch products", error);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("farmerToken");
@@ -29,37 +97,61 @@ const FarmerDashboard = () => {
   };
 
   const handleAddProduct = () => {
-    navigate("/add-product"); // Navigate to the Add Product page
+    navigate("/add-product");
   };
+
+  const handleEdit = (id) => {
+    navigate(`/edit-product/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        const token = localStorage.getItem("farmerToken");
+        await axios.delete(`http://localhost:5000/api/products/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        fetchProducts();
+      } catch (error) {
+        console.error("Delete failed", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1>Farmer Dashboard</h1>
+      <div className="dashboard-header">
+        <h2>Welcome, Farmer!</h2>
         <div>
-          <button onClick={handleAddProduct} className="btn-add">➕ Add Product</button>
-          <button onClick={handleLogout} className="btn-logout">🚪 Logout</button>
+          <button className="btn btn-success me-2" onClick={handleAddProduct}>Add Product</button>
+          <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
         </div>
-      </header>
+      </div>
 
-      {loading ? (
-        <p>Loading products...</p>
-      ) : (
-        <div className="product-list">
-          {products.length > 0 ? (
-            products.map((product) => (
-              <div key={product._id} className="product-card">
-                <img src={product.image} alt={product.name} className="product-image" />
-                <h2>{product.name}</h2>
-                <p>Price: ₹{product.price}</p>
-                <p>Quantity: {product.quantity} kg</p>
+      <div className="product-list">
+        {products.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
+          products.map((product) => (
+            <div key={product._id} className="product-card">
+              <img src={product.imageUrl} alt={product.name} className="product-image" />
+              <h5>{product.name}</h5>
+              <p>Price: ₹{product.price}</p>
+              <p>Quantity: {product.quantity}</p>
+              <div>
+                <button className="btn btn-primary me-2" onClick={() => handleEdit(product._id)}>Edit</button>
+                <button className="btn btn-danger" onClick={() => handleDelete(product._id)}>Delete</button>
               </div>
-            ))
-          ) : (
-            <p>No products available. Add some!</p>
-          )}
-        </div>
-      )}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

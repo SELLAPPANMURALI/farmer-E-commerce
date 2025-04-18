@@ -59,6 +59,7 @@ const FarmerRegister = lazy(() => import("./components/FarmerRegister"));
 const FarmerLogin = lazy(() => import("./components/FarmerLogin"));
 const FarmerDashboard = lazy(() => import("./components/FarmerDashboard"));
 const FarmerRoute = lazy(() => import("./components/FarmerRoute"));
+const ConsumerAuth = lazy(() => import("./components/ConsumerAuth"));
 
 const App = () => {
   return (
@@ -72,6 +73,7 @@ const App = () => {
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/consumer-auth" element={<ConsumerAuth />} />
 
               {/* Farmer Routes */}
               <Route path="/farmer-register" element={<FarmerRegister />} />
