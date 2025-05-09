@@ -1,3 +1,4 @@
+
 // import React, { useState } from 'react';
 // import './ConsumerAuth.css';
 
@@ -10,7 +11,7 @@
 //     const password = e.target.password.value;
 
 //     try {
-//       const response = await fetch('http://localhost:8080/api/consumer/login', {
+//       const response = await fetch('http://localhost:5000/api/consumer/login', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ email, password }),
@@ -23,6 +24,7 @@
 //         alert(data.message || 'Login failed');
 //       }
 //     } catch (error) {
+//       console.error(error);
 //       alert('Error logging in');
 //     }
 //   };
@@ -35,7 +37,7 @@
 //     const location = e.target.location.value;
 
 //     try {
-//       const response = await fetch('http://localhost:8080/api/consumer/register', {
+//       const response = await fetch('http://localhost:5000/api/consumer/register', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ name, email, password, location }),
@@ -48,6 +50,7 @@
 //         alert(data.message || 'Registration failed');
 //       }
 //     } catch (error) {
+//       console.error(error);
 //       alert('Error registering');
 //     }
 //   };
@@ -55,40 +58,54 @@
 //   return (
 //     <div className="auth-container">
 //       <div className="auth-box">
-//         <h2>{isRegistering ? 'Consumer Registration' : 'Consumer Login'}</h2>
+//         <h2 className="text-center mb-4">
+//           {isRegistering ? 'Consumer Registration' : 'Consumer Login'}
+//         </h2>
 
 //         {!isRegistering ? (
 //           <form onSubmit={handleLogin} className="auth-form">
-//             <label>Email</label>
-//             <input type="email" name="email" required />
+//             <div className="mb-3">
+//               <label className="form-label">Email</label>
+//               <input type="email" name="email" className="form-control" required />
+//             </div>
 
-//             <label>Password</label>
-//             <input type="password" name="password" required />
+//             <div className="mb-3">
+//               <label className="form-label">Password</label>
+//               <input type="password" name="password" className="form-control" required />
+//             </div>
 
-//             <button type="submit">Login</button>
-//             <p className="switch-text">
+//             <button type="submit" className="btn btn-primary w-100">Login</button>
+//             <p className="switch-text mt-3 text-center">
 //               Don’t have an account?{' '}
-//               <span onClick={() => setIsRegistering(true)}>Register</span>
+//               <span className="text-primary" style={{ cursor: 'pointer' }} onClick={() => setIsRegistering(true)}>Register</span>
 //             </p>
 //           </form>
 //         ) : (
 //           <form onSubmit={handleRegister} className="auth-form">
-//             <label>Name</label>
-//             <input type="text" name="name" required />
+//             <div className="mb-3">
+//               <label className="form-label">Name</label>
+//               <input type="text" name="name" className="form-control" required />
+//             </div>
 
-//             <label>Email</label>
-//             <input type="email" name="email" required />
+//             <div className="mb-3">
+//               <label className="form-label">Email</label>
+//               <input type="email" name="email" className="form-control" required />
+//             </div>
 
-//             <label>Password</label>
-//             <input type="password" name="password" required />
+//             <div className="mb-3">
+//               <label className="form-label">Password</label>
+//               <input type="password" name="password" className="form-control" required />
+//             </div>
 
-//             <label>Location</label>
-//             <input type="text" name="location" required />
+//             <div className="mb-3">
+//               <label className="form-label">Address</label>
+//               <input type="text" name="location" className="form-control" required />
+//             </div>
 
-//             <button type="submit">Register</button>
-//             <p className="switch-text">
+//             <button type="submit" className="btn btn-success w-100">Register</button>
+//             <p className="switch-text mt-3 text-center">
 //               Already have an account?{' '}
-//               <span onClick={() => setIsRegistering(false)}>Login</span>
+//               <span className="text-primary" style={{ cursor: 'pointer' }} onClick={() => setIsRegistering(false)}>Login</span>
 //             </p>
 //           </form>
 //         )}
@@ -102,9 +119,11 @@
 
 import React, { useState } from 'react';
 import './ConsumerAuth.css';
+import { useNavigate } from 'react-router-dom'; // ✅ Add navigation hook
 
 const ConsumerAuth = () => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate(); // ✅ Initialize navigation
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -112,7 +131,7 @@ const ConsumerAuth = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch('http://localhost:8080/api/consumer/login', {
+      const response = await fetch('http://localhost:5000/api/consumer/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -120,7 +139,7 @@ const ConsumerAuth = () => {
       const data = await response.json();
       if (response.ok) {
         alert('Login successful!');
-        // store token or redirect
+        navigate('/products'); // ✅ Redirect after login
       } else {
         alert(data.message || 'Login failed');
       }
@@ -138,7 +157,7 @@ const ConsumerAuth = () => {
     const location = e.target.location.value;
 
     try {
-      const response = await fetch('http://localhost:8080/api/consumer/register', {
+      const response = await fetch('http://localhost:5000/api/consumer/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, location }),
@@ -199,7 +218,7 @@ const ConsumerAuth = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Location</label>
+              <label className="form-label">Address</label>
               <input type="text" name="location" className="form-control" required />
             </div>
 

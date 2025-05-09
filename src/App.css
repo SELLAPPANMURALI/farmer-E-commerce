@@ -1,3 +1,6 @@
+body {
+  padding-top: 80px; /* adjust based on navbar height */
+}
 
 #root {
   max-width: 100%;  /* Ensure full width */
