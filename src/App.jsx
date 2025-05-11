@@ -49,7 +49,7 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 
 import Navbar from "./components/Navbar";
-
+import NearestFarmer from "./components/NearestFarmer";
 // Lazy loading
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -75,9 +75,12 @@ const App = () => {
               <Route path="/cart" element={<Cart />} />
               <Route path="/consumer-auth" element={<ConsumerAuth />} />
 
+
               {/* Farmer Routes */}
               <Route path="/farmer-register" element={<FarmerRegister />} />
               <Route path="/farmer-login" element={<FarmerLogin />} />
+
+              <Route path="/nearest-farmer" element={<NearestFarmer />} />
               <Route element={<FarmerRoute />}>
                 <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
               </Route>
