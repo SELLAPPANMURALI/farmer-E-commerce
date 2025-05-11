@@ -361,7 +361,7 @@ const FarmerDashboard = () => {
         <input
           type="number"
           name="quantity"
-          placeholder="Quantity"
+          placeholder="Quantity kg"
           value={formData.quantity}
           onChange={handleChange}
           required
@@ -380,7 +380,7 @@ const FarmerDashboard = () => {
           <tr>
             <th>Name</th>
             <th>Price ₹</th>
-            <th>Quantity</th>
+            <th>Quantity kg</th>
             <th>Image</th>
             <th>Actions</th>
           </tr>

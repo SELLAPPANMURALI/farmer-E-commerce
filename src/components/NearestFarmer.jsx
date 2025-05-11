@@ -1,3 +1,5 @@
+
+
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 
@@ -16,9 +18,7 @@
 //           try {
 //             const response = await axios.get(
 //               `${import.meta.env.VITE_BACKEND_URL}/api/products/nearest`,
-//               {
-//                 params: { lat, lng },
-//               }
+//               { params: { lat, lng } }
 //             );
 //             setProducts(response.data);
 //           } catch (err) {
@@ -46,7 +46,6 @@
 
 //       {loading && <p>Loading nearby products...</p>}
 //       {locationError && <p className="text-danger">{locationError}</p>}
-
 //       {!loading && products.length === 0 && <p>No nearby products found.</p>}
 
 //       <div className="row">
@@ -74,8 +73,6 @@
 // };
 
 // export default NearestFarmer;
-
-
 
 
 
@@ -125,7 +122,6 @@
 
 //       {loading && <p>Loading nearby products...</p>}
 //       {locationError && <p className="text-danger">{locationError}</p>}
-
 //       {!loading && products.length === 0 && <p>No nearby products found.</p>}
 
 //       <div className="row">
@@ -142,7 +138,7 @@
 //                 <h5 className="card-title">{product.name}</h5>
 //                 <p>Price: ₹{product.price}</p>
 //                 <p>Qty: {product.quantity}</p>
-//                 <p><small>Farmer ID: {product.farmerId}</small></p>
+//                 <p><strong>Farmer Mobile:</strong> {product.farmerMobile || "Not Available"}</p>
 //               </div>
 //             </div>
 //           </div>
@@ -158,11 +154,14 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useCart } from "../context/CartContext"; // ✅ Update this path if needed
 
 const NearestFarmer = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [locationError, setLocationError] = useState("");
+
+  const { addToCart } = useCart(); // ✅ get addToCart from context
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -217,8 +216,14 @@ const NearestFarmer = () => {
               <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>
                 <p>Price: ₹{product.price}</p>
-                <p>Qty: {product.quantity}</p>
-                <p><small>Farmer ID: {product.farmerId}</small></p>
+                <p>Qty: Kg {product.quantity}</p>
+                <p><strong>Farmer Mobile:</strong> {product.farmerMobile || "Not Available"}</p>
+                <button
+                  className="btn btn-success mt-2"
+                  onClick={() => addToCart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           </div>

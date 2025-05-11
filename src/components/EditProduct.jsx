@@ -174,7 +174,7 @@ const EditProduct = () => {
           <input type="number" name="price" className="form-control" value={product.price} onChange={handleChange} required />
         </div>
         <div className="mb-3">
-          <label>Quantity</label>
+          <label>Quantity Kg</label>
           <input type="number" name="quantity" className="form-control" value={product.quantity} onChange={handleChange} required />
         </div>
         <div className="mb-3">
