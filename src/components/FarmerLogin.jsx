@@ -2,7 +2,6 @@
 // import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
-// // import "./FarmerLogin.css";
 
 // const FarmerLogin = () => {
 //   const [email, setEmail] = useState("");
@@ -13,8 +12,11 @@
 //   const handleLogin = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('${import.meta.env.VITE_BACKEND_URL}/api/farmers/login', { email, password });
-//       login(response.data.farmer);
+//       const response = await axios.post(
+//         `${import.meta.env.VITE_BACKEND_URL}/api/farmers/login`,
+//         { email, password }
+//       );
+//       login(response.data); // backend returns full farmer object
 //       alert("Login successful!");
 //       navigate("/farmer-dashboard");
 //     } catch (error) {
@@ -28,13 +30,25 @@
 //       <form onSubmit={handleLogin}>
 //         <div className="mb-3">
 //           <label>Email</label>
-//           <input type="email" className="form-control" onChange={(e) => setEmail(e.target.value)} required />
+//           <input
+//             type="email"
+//             className="form-control"
+//             onChange={(e) => setEmail(e.target.value)}
+//             required
+//           />
 //         </div>
 //         <div className="mb-3">
 //           <label>Password</label>
-//           <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} required />
+//           <input
+//             type="password"
+//             className="form-control"
+//             onChange={(e) => setPassword(e.target.value)}
+//             required
+//           />
 //         </div>
-//         <button type="submit" className="btn btn-success">Login</button>
+//         <button type="submit" className="btn btn-success">
+//           Login
+//         </button>
 //       </form>
 //     </div>
 //   );
@@ -61,10 +75,19 @@ const FarmerLogin = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/farmers/login`,
         { email, password }
       );
-      login(response.data); // backend returns full farmer object
+
+      const farmer = response.data;
+
+      // ✅ Save farmer info to localStorage
+      localStorage.setItem("farmerId", farmer.id);
+      localStorage.setItem("farmerName", farmer.name);
+      localStorage.setItem("farmerEmail", farmer.email);
+
+      login(farmer);
       alert("Login successful!");
       navigate("/farmer-dashboard");
     } catch (error) {
+      console.error("Login error:", error);
       alert("Invalid credentials!");
     }
   };
