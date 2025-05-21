@@ -74,6 +74,7 @@ const EditProduct = lazy(() => import("./components/EditProduct"));
 const FarmerRoute = lazy(() => import("./components/FarmerRoute"));
 const NearestFarmer = lazy(() => import("./components/NearestFarmer")); // ✅ Nearest farmer
 const FarmerOrders = lazy(() => import("./components/FarmerOrders")); // Add import
+const ConsumerOrders = lazy(() => import("./components/ConsumerOrders"));
 
 const AppRouter = () => {
   return (
@@ -90,6 +91,7 @@ const AppRouter = () => {
 
           {/* Consumer route */}
           <Route path="/consumer-auth" element={<ConsumerAuth />} />
+          <Route path="/consumer-orders" element={<ConsumerOrders />} />
 
           {/* Farmer routes */}
           <Route path="/farmer-register" element={<FarmerRegister />} />

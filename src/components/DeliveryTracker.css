@@ -1,0 +1,61 @@
+.delivery-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+  padding: 10px;
+  margin: 20px 0;
+}
+
+.step-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  flex-direction: column;
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: lightgray;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.step-circle.completed {
+  background-color: green;
+}
+
+.step-label {
+  margin-top: 5px;
+  font-size: 12px;
+  color: gray;
+}
+
+.step-label.completed {
+  color: green;
+  font-weight: 500;
+}
+
+.step-line {
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background-color: lightgray;
+  top: 13px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(0%);
+}
+
+.step-line.completed {
+  background-color: green;
+}
